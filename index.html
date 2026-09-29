@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maktaba Salafiyyah</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- Premium Dark Theme Palette --- */
+        :root {
+            --bg-base: #070b0d; 
+            --card-bg: rgba(18, 25, 30, 0.6); 
+            --primary-glow: #10b981; 
+            --secondary-glow: #047857; 
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* --- Live Animated Background (Glowing Orbs) --- */
+        .live-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: var(--bg-base);
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.5;
+            animation: float 20s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            top: -10%; left: -10%;
+            width: 50vw; height: 50vw;
+            background: rgba(16, 185, 129, 0.15); 
+        }
+
+        .orb-2 {
+            bottom: -10%; right: -10%;
+            width: 40vw; height: 40vw;
+            background: rgba(4, 120, 87, 0.15); 
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(10vw, 10vh) scale(1.2); }
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 3rem 1rem 2rem;
+            text-align: center;
+            animation: dropDown 1s ease-out;
+        }
+
+        header h1 {
+            font-family: 'Amiri', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #fff, var(--primary-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+        }
+
+        header p {
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+
+        /* --- Main Grid --- */
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            min-height: 60vh;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        /* --- Glassmorphism Folder Card --- */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(30px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-decoration: none;
+            display: block;
+        }
+
+        .card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(16, 185, 129, 0.4);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15);
+        }
+
+        .card-img-container {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 60%;
+            background: linear-gradient(to top, rgba(18, 25, 30, 0.9), transparent);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.1) rotate(1deg);
+        }
+
+        .card-title {
+            padding: 1.2rem;
+            text-align: center;
+            font-weight: 500;
+            font-size: 1.05rem;
+            color: var(--text-main);
+            letter-spacing: 0.5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            min-height: 70px;
+        }
+        
+        .card:hover .card-title {
+            color: var(--primary-glow);
+        }
+
+        /* --- Footer & Watermark --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        footer .watermark {
+            color: var(--primary-glow);
+            font-weight: 500;
+            letter-spacing: 1px;
+            font-family: 'Amiri', serif;
+            font-size: 1.1rem;
+        }
+
+        @keyframes dropDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Live Animated Background -->
+    <div class="live-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>Maktaba Salafiyyah</h1>
+        <p>A Premium Quran & Sunnah Knowledge Base</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="grid" id="folderGrid">
+            <!-- Folders JavaScript se yahan aayenge -->
+        </div>
+    </main>
+
+    <!-- Footer with Watermark -->
+    <footer>
+        <p>Developed by <span class="watermark">Soaib Khan & Imran</span></p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // ============================================================================
+        // 👇 YAHAN APNE MEGA LINKS DALEIN ("LINK_HERE" KI JAGAH APNA LINK PASTE KAREIN) 👇
+        // ============================================================================
+        const appData = [
+            {
+                folderName: "Tawheed",
+                thumbnailUrl: "https://i.pinimg.com/1200x/fe/e5/9a/fee59ad3e028b0492666616a405d82ae.jpg", 
+                link: "https://mega.nz/folder/0EJ2iRpA#mAfms8NqItJcsi0dMjVoWA"
+            },
+            {
+                folderName: "Shirk",
+                thumbnailUrl: "https://i.pinimg.com/736x/ea/40/72/ea40729b1276de9baa135b8dc9f4272c.jpg", 
+                link: "https://mega.nz/folder/dJhAgRKL#ffz92OI8Lb8A7tDQzgzz9A"
+            },
+            {
+                folderName: "Tawheed ki Dawat Na Dene ka Anjam",
+                thumbnailUrl: "https://i.pinimg.com/736x/cb/93/c4/cb93c4dad10b1c30bdf320b538d10f68.jpg", 
+                link: "https://mega.nz/folder/JURiwQQQ#hQdNR-ILibYeeWw2PqN9Qg"
+            },
+            {
+                folderName: "Rafaulyaden",
+                thumbnailUrl: "https://imgs.search.brave.com/DoC2uO6B7DggEi9e4fpzm_ChUtJPUNuAdc72sdNKUK4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9leHRl/cm5hbC1wcmV2aWV3/LnJlZGQuaXQvM2J6/ZWM0alBMZ3l6a0R2/V0ZhOWt2UUdHdHRU/VF9qRllWU3JCS0Et/QUo1Yy5qcGVnP3dp/ZHRoPTE0MCZoZWln/aHQ9MTA1JmF1dG89/d2VicCZzPTY3YTA4/OTljMjEzYWI4NGEz/Y2ZlNTQ4NzkxNzBi/N2FmYmMyOTJiMmQ", 
+                link: "https://mega.nz/folder/dIoFQa7J#pFsDVxlMMKf9Iwi2SMPuAw"
+            },
+            {
+                folderName: "Manhaj e Salaf - Ahele Hadees",
+                thumbnailUrl: "https://i.pinimg.com/736x/e0/86/cd/e086cddf4bfc2e262c088750948c69c2.jpg", 
+                link: "https://mega.nz/folder/IZYkGLLR#CyiTL33iO9mXhtlbHEDzcA"
+            },
+            {
+                folderName: "Islam and Science",
+                thumbnailUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=400", 
+                link: "https://mega.nz/folder/MJZ3DZYI#LfAG_IGf6B7Ml3sAu1qkrQ"
+            },
+            {
+                folderName: "Majority is Not Evidence in Islam",
+                thumbnailUrl: "https://images.unsplash.com/photo-1476820865390-c52aeebb9891?auto=format&fit=crop&q=80&w=400", 
+                link: "https://mega.nz/folder/MdATRboK#nK0B4VzhI9bm3i-sZcwPrA"
+            },
+            {
+                folderName: "Ittiba Ya Taqleed",
+                thumbnailUrl: "https://images.unsplash.com/photo-1501139083538-0139583c060f?auto=format&fit=crop&q=80&w=400", 
+                link: "https://mega.nz/folder/cU4CxCpa#Sesa5v23mLFwQjt3yf3nZg"
+            },
+            {
+                folderName: "Before Islah, After Islah",
+                thumbnailUrl: "https://images.unsplash.com/photo-1494548162494-384bba4ab999?auto=format&fit=crop&q=80&w=400", 
+                link: "https://mega.nz/folder/JFBzTRwY#Ke7AGy_95FYTzqhIsK_bxA"
+            },
+            {
+                folderName: "Aaj Musalman Irtedad Ka Shikaar",
+                thumbnailUrl: "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&q=80&w=400", 
+                link: "https://mega.nz/folder/4NAEmbBT#eQ0sdAKTwjisyC-qdz7tkQ"
+            },
+            {
+                folderName: "Khilafat Asal Maqsad Nahi",
+                thumbnailUrl: "https://i.pinimg.com/1200x/6f/4b/4a/6f4b4a9edfd2cddbb9432bdd0a778fc8.jpg", 
+                link: "https://mega.nz/folder/lMASnSDJ#PvJHaAMZrWnaMVhq8vuzww"
+            },
+            {
+                folderName: "Radd E Deobandi",
+                thumbnailUrl: "https://i.pinimg.com/736x/35/6c/18/356c18a672baeca8b6c7973cf2ade098.jpg", 
+                link: "https://mega.nz/folder/QQI1jYAZ#nyxevwrW7min5ykDSRthUw"
+            },
+            {
+                folderName: "Radd E Barelvi",
+                thumbnailUrl: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=400", 
+                link: "https://mega.nz/folder/1VJgBJia#NSXzsWmcuo9FCkCyGdcb6g"
+            },
+            {
+                folderName: "Radd E Hanafi",
+                thumbnailUrl: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&q=80&w=400", 
+                link: "https://mega.nz/folder/tdwRABhb#9avQZ7XQxR_DZqptzxnR2Q"
+            },
+            {
+                folderName: "Radd-e-Taqleed",
+                thumbnailUrl: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&q=80&w=400", 
+                link: ""
+            },
+            {
+                folderName: "Refute Engineer Ali Mirza",
+                thumbnailUrl: "https://i.pinimg.com/736x/6c/62/70/6c6270aa7401f2fd41fd5ba76fb77f10.jpg", 
+                link: "https://mega.nz/folder/REZTVKAR#KP27yGW3bns2hhvUVIppQQ"
+            },
+            {
+                folderName: "Saudi Hukumat Aur Khawarij",
+                thumbnailUrl: "https://i.pinimg.com/736x/d3/d0/06/d3d006668d140d366d0f5c6f80ac960b.jpg", 
+                link: "https://mega.nz/folder/AYBFhAgQ#nhmKIaSEUsth8zF-Io9BWw"
+            },
+            {
+                folderName: "Ahl-e-Hadees / Salafi Scholars",
+                thumbnailUrl: "https://i.pinimg.com/736x/b3/af/57/b3af57b8b95911ede983330cef83e9dd.jpg", 
+                link: "https://mega.nz/folder/QVIGwRpB#OAZP33Pdpk-2RgwU-mzpaQ"
+            }
+        ];
+        // ============================================================================
+        // 👆👆👆 DATA SECTION KHATAM 👆👆👆
+        // ============================================================================
+
+        const folderGrid = document.getElementById('folderGrid');
+
+        // Folders render aur animate karne ka function
+        function renderFolders() {
+            appData.forEach((folder, index) => {
+                const card = document.createElement('a'); 
+                card.className = 'card';
+                card.href = folder.link; 
+                card.target = "_blank"; 
+
+                card.innerHTML = `
+                    <div class="card-img-container">
+                        <img src="${folder.thumbnailUrl}" alt="${folder.folderName}" class="card-img">
+                    </div>
+                    <div class="card-title">
+                        ${folder.folderName} 
+                        <i class="fas fa-external-link-alt" style="font-size: 0.75rem; opacity: 0.6; margin-top:2px;"></i>
+                    </div>
+                `;
+                folderGrid.appendChild(card);
+
+                // Smooth staggered appearance effect
+                setTimeout(() => {
+                    card.classList.add('show');
+                }, index * 100); // 100ms delay taaki jaldi aur smooth list load ho
+            });
+        }
+
+        // App start on window load
+        window.onload = renderFolders;
+    </script>
+</body>
+</html>
